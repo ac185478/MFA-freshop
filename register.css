@@ -83,12 +83,12 @@ body{
 }
 .left-screen{
     /* margin-top: 10px; */
-    margin-bottom: 80px;
+    margin-bottom: 40px;
 }
 
 h1{
     position: absolute;
-    margin-bottom: 1200px;
+    margin-bottom: 1100px;
     margin-right: 420px;
 }
 p{

@@ -1,0 +1,222 @@
+.overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+   height:100%;
+}
+
+.wrap h1{
+    text-align:center;
+    color:#FFF !important;
+    margin-top:20%;
+    font:60px Lobster;
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+                0px 8px 13px rgba(0,0,0,0.1),
+                0px 18px 23px rgba(0,0,0,0.1);
+}
+
+.wrap p{
+    color:#FFF;
+    text-align:center;
+    font:15px Lobster;
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+                0px 8px 13px rgba(0,0,0,0.1),
+                0px 18px 23px rgba(0,0,0,0.1);
+}
+
+.wrap{
+    width:400px;
+    margin:0 auto;
+}
+
+
+
+.wrap input{
+    width:100%;
+    padding:10px;
+    margin-bottom:20px;
+    border-radius:5px;
+    border:none;
+    outline:none;
+    font:13px Raleway;
+}
+
+.wrap input[type="submit"]{
+    background:#e74c3c;
+    color:#FFF;
+    width:105%;
+    padding:15px;
+    font-weight:700;
+    opacity:0.8;
+
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+                0px 8px 13px rgba(0,0,0,0.1),
+                0px 18px 23px rgba(0,0,0,0.1);
+}
+
+
+.wrap input[type="submit"]:hover{
+    cursor:pointer;
+    opacity:1;
+}
+
+.wrap input[type="text"]:focus{
+    border-left:5px solid #e74c3c;
+    -webkit-transition:0.4s ease;
+}
+
+.wrap input[type="email"]:focus{
+    border-left:5px solid #e74c3c;
+    -webkit-transition:0.4s ease;
+}
+
+.wrap a{
+    font:13px Raleway;
+    color:#FFF;
+    font-weight:700;
+    text-decoration:none;
+    opacity:0.6;
+}
+
+.wrap a:hover{
+    opacity:1;
+}
+
+/* ================================================================================================== */
+
+.QuestionList{
+    width:400px;
+    margin:0 auto;
+    padding: 0px 50px 40px 30px; 
+    border-style: groove;
+    border-color: #e74c3c;
+}
+
+.QuestionList input{
+    width:100%;
+    padding:10px;
+    margin-bottom:20px;
+    border-radius:5px;
+    border:none;
+    outline:none;
+    font:13px Raleway;
+}
+
+.QuestionList input[type="submit"]{
+    background:#e74c3c;
+    color:#FFF;
+    width:105%;
+    padding:15px;
+    font-weight:700;
+    opacity:0.8;
+}
+
+.QuestionList input[type="submit"]:hover{
+    cursor:pointer;
+    opacity:1;
+}
+
+.QuestionList input[type="text"]:focus{
+    border-left:5px solid #e74c3c;
+    -webkit-transition:0.4s ease;
+}
+
+/* =================================================================================================== */
+*
+{
+    box-sizing: border-box; 
+    position: relative;
+}
+.pattern h2{
+    margin-left: 800px;
+}
+
+.pattern-body{
+    width: 100vw;
+    height: 100vh;   
+    margin-left: 800px;
+    /* background: #121212; */
+    --baseCol: #f6422e;
+}
+
+.lockBox
+{
+    width: 300px;
+    height: 300px;
+    border: 1px solid #e74c3c;
+    display: flex;
+    align-items: space-between;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.dot
+{
+    width: 10px;
+    height: 10px;
+    border: 1px solid #e74c3c;
+    margin: 40px;
+    border-radius: 50%;
+    box-shadow: 0 0 30px #e74c3c;
+}
+
+.dot i
+{
+    pointer-events: none;
+    opacity: 0;
+}
+
+.dot.active
+{
+    transform: scale(0);
+    pointer-events: none;
+    border: none;
+    animation: pattern 0.25s cubic-bezier(0, 2.24,0.2,2.23)
+    forwards;
+}
+
+@keyframes pattern
+{
+    100%
+    {
+        background: var(--baseCol);
+        transform: scale(1);
+        box-shadow: 0 0 30px 5px var(--baseCol);
+    }
+}
+
+.dotArea
+{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    left: -16px;
+    top: -16px;
+    cursor: pointer;
+}
+
+.lockBox svg
+{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    z-index: -1;
+    fill: none;
+    stroke: var(--baseCol);
+}
+
+
+/* ========================================================================================================== */
+
+.scrambledPin{
+    width:400px;
+    margin:0 auto;
+    padding: 0px 50px 40px 30px; 
+    border-style: groove;
+    border-color: #e74c3c;
+}
