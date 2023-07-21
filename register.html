@@ -4,7 +4,35 @@
     <title>Footware</title>
     <link rel="stylesheet" href="./register.css">
     <script>
+        function myFunction() {
+            // Get the checkbox
+            var checkBox = document.getElementById("checkbox-2FA");
+            // Get the output text
+            var text = document.getElementById("twoFA");
+            var lable = document.getElementById("checkbox-lable");
 
+            // If the checkbox is checked, display the output text
+            if (checkBox.checked == true){
+                text.style.display = "block";
+                element.style.color="black";
+                lable.classList.add(".after-checked");
+            } else {
+                text.style.display = "none";
+            }
+            
+        }
+        function checkPassword(form) {
+            // 👇 get passwords from the field using their name attribute
+            const password1 = document.getElementById("password");
+            const password2= document.getElementById("confirmPassword");
+
+            // 👇 check if both match using if-else condition
+            if (password1.value !== password2.value) {
+                alert("Error! Password did not match.");
+                return false;
+            } 
+            return true;
+        }
     </script>
 </head>
 <body>
@@ -14,26 +42,33 @@
         </div>
         <div class="right-screen">
             <h1>Footwear</h1>
-            <form class="login-box">
+            <form onSubmit="return checkPassword()" class="login-box">
                 <h2>Register</h2>
                 <div class="user-box">
-                    <input type="text" name="full-name" required>
-                    <label>Full name</label>
+                    <input type="text" name="full-name" placeholder="Full name" required>
                 <div class="user-box">
-                    <input type="text" name="username" required>
-                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Username" required>
                 </div>
                 <div class="user-box">
-                    <input type="email" name="email" required>
-                    <label>Email ID</label>
+                    <input type="email" name="email" placeholder="Email ID" required>
                 </div>
                 <div class="user-box">
-                    <input type="password" name="password" required>
-                    <label>Password</label>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
                 </div>
                 <div class="user-box">
-                    <input type="password" name="confirm-password" required>
-                    <label>Confirm Password</label>
+                    <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="checkbox-2FA" name="checkbox-2FA" onclick="myFunction()">
+                    <label for="checkbox-2FA" id="checkbox-lable" >Do you want to add 2 Factor Authentication</label>
+                </div>
+                <div class="user-box">
+                    <input  style="display:none" list="twoFAs" name="twoFA" id="twoFA" placeholder="Choose the 2nd factor from the list">
+                    <datalist id="twoFAs">
+                      <option value="Scrambled PIN">
+                      <option value="Pattern">
+                      <option value="Security Question"></option>
+                    </datalist>
                 </div>
                 <button>Submit</button>
                 <p>Already have an account? <a href="landing.html">Log In</a></p>

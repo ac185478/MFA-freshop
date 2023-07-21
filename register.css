@@ -1,6 +1,5 @@
 
 .login-box {
-    
     width: 400px;
     padding: 40px;
     transform: translate(-50%, -50%);
@@ -17,40 +16,32 @@
     text-align: center;
   }
   
-  .login-box .user-box {
+  .login-box .user-box .checkbox{
     position: relative;
   }
   
-  .login-box .user-box input {
+  .user-box input {
     width: 100%;
-    padding: 10px 0;
+    padding: 7px 0;
     font-size: 16px;
-    color: hwb(0 100% 0%);
-    margin-bottom: 30px;
+    color: black;
+    margin-bottom: 20px;
     border: none;
     border-bottom: 1px solid #fff;
     outline: none;
     background: transparent;
   }
-  .login-box .user-box label {
+ label {
     position: absolute;
     top:0;
-    left: 0;
-    padding: 10px 0;
     font-size: 16px;
-    color: #fff;
-    pointer-events: none;
-    transition: .5s;
-  }
- 
-  .login-box .user-box input:focus ~ label,
-  .login-box .user-box input:valid ~ label {
-    top: -20px;
-    left: 0;
-    color:  #fff;
-    font-size: 12px;
+    color:aliceblue;
   }
   
+ .checkbox input{
+    margin-left: 140px;
+ }
+ 
  .login-box button{
     /* display: block; */
     padding: 0.9rem;
@@ -87,7 +78,7 @@ body{
 }
 
 .right-screen{
-    margin-top: 500px;
+    margin-top: 400px;
     margin-left: 300px;
 }
 .left-screen{
@@ -97,9 +88,13 @@ body{
 
 h1{
     position: absolute;
-    margin-bottom: 1260px;
+    margin-bottom: 1200px;
     margin-right: 420px;
 }
 p{
     margin-left: 60px;
+}
+
+::placeholder{
+  color:aliceblue;
 }
