@@ -40,7 +40,7 @@
     font-size: 16px;
     color: #fff;
     pointer-events: none;
-    transition: .5s;
+    transition: .2s;
   }
  
   .login-box .user-box input:focus ~ label,
