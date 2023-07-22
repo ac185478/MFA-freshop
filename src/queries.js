@@ -19,13 +19,13 @@ let twofa = `CREATE TABLE IF NOT EXISTS "twofa" (
         PRIMARY KEY (id)
         );`;
 
-let INSERT_TWOFA = `INSERT INTO twofa(type,securityQuestion,securityCode,pattern,pin) VALUES(?,?,?,?,?)`
-let INSERT_USERS = `INSERT INTO users (fullName,userName,email,password) VALUES(?,?,?,?)`
+let INSERT_TWOFA = `INSERT INTO twofa(type,securityQuestion,securityAnswer,pattern,pin) VALUES(?,?,?,?,?)`
+let INSERT_USERS = `INSERT INTO users (fullName,userName,email,password,twofaid) VALUES(?,?,?,?,?)`
 
-//EXPORTS
-exports.users=users;
-exports.twofa=twofa;
-exports ={
+// EXPORTS
+exports.users = users;
+exports.twofa = twofa;
+exports = {
     INSERT_TWOFA,
     INSERT_USERS
 }

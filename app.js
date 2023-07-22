@@ -8,10 +8,11 @@ const { db } = require("./src/controllers/db.controller");
 const { login } = require("./src/controllers/login.controller");
 const { users } = require("./src/queries");
 const { twofa } = require("./src/queries");
-const {map} = require("./src/utils/internalMap");
+const { map } = require("./src/utils/internalMap");
 
-const {INSERT_TWOFA,
-    INSERT_USERS} = require("./src/queries");
+const { INSERT_TWOFA, INSERT_USERS } = require("./src/queries");
+const { HttpStatusCode } = require("axios");
+
 //create an Express App
 const app = express();
 
@@ -28,139 +29,152 @@ const port = process.env.PORT || 3000;
 /* ------------------ Session -------------------- */
 //setting up session 35b8edcb895439ecaf5d228a7413241e
 app.use(session({
-    secret:'35b8edcb895439ecaf5d228a7413241e',
-    resave:false,
-    saveUninitialized:true
+    secret: '35b8edcb895439ecaf5d228a7413241e',
+    resave: false,
+    saveUninitialized: true
 }))
 
 /* ------------------ Creating tables -------------------- */
 //creating the tables
 db.serialize(() => {
-  db.run(twofa, (err) => {
-    console.log(err);
-  });
-  db.run(users, (err) => {
-    console.log(err);
-  });
+    db.run(twofa, (err) => {
+        console.log(err);
+    });
+    db.run(users, (err) => {
+        console.log(err);
+    });
 });
 
 /* ------------------ Handling Registration -------------------- */
 //RouteRegister
-app.post("/register",register);  
+app.post("/register", register);
 
-app.get('/twofaRegister',(req,res)=>{
+app.get('/2fa-login', (req, res) => {
+    console.log("login is successfull, validating the 2fa type")
+    let twofaID = req.session.twofaID
+    const { type, questionNo, answer } = req.body;
+
+    db.get(
+        "SELECT * FROM twofa WHERE id = ?",
+        [twofaID],
+        async (err, twofa) => {
+            if (err) {
+                return res.status(HttpStatusCode.InternalServerError).json({ error: "failed to fetch user data" });
+            }
+            if (!twofa) {
+                return res.status(HttpStatusCode.InternalServerError).json({ error: "could not find the data" });
+            }
+
+            res.status(HttpStatusCode.Ok)
+            if (twofa.type == "code") {
+                if (answer != twofa.securityAnswer) {
+                    res.status(HttpStatusCode.Unauthorized)
+                    return;
+                }
+                res.redirect("/welcome")
+            } else if (twofa.type == "pin") {
+                if (answer != twofa.pin) {
+                    res.status(HttpStatusCode.Unauthorized)
+                    return;
+                }
+                res.redirect("/welcome")
+            } else {
+                if (answer != twofa.pattern) {
+                    res.status(HttpStatusCode.Unauthorized)
+                    return;
+                }
+                res.redirect("/welcome")
+            }
+        });
+})
+
+app.get('/twofaRegister', (req, res) => {
     // console.log(__dirname+'public/twoFactorAuthentication.html');
+    console.log("registeration is not yet done, require 2fa, sending to UI for that data")
+    console.log("logging user registration data")
     console.log(req.session.body);
-    res.sendFile('public/twoFactorAuthentication.html',{root:__dirname});
+    res.sendFile('public/twoFactorAuthentication.html', { root: __dirname });
 })
 
 //Handling 2fa registration
 
 //2fa question
-app.post('/2far/question',async (req,res)=>{
-    let {securityQuestion,answer} = req.body;
-    let {fullName,userName,email,password} = req.session.body;
-    let type = 1;
+app.post('/2fa-register', async (req, res) => {
+    let { type, securityQuestion, answer } = req.body;
+    let { fullName, userName, email, password } = req.session.body;
     const hashedPass = await bcrypt.hash(password, 10);
-    db.run(INSERT_TWOFA,[type,securityQuestion,answer,null,null,],err=>{
-        if(err){
+
+    // type,securityQuestion,securityAnswer,pattern,pin
+    let twofaID
+    if (type === "code") {
+        db.run(INSERT_TWOFA, [type, securityQuestion, answer, null, null,], err => {
+            if (err) {
+                console.log(err);
+                res.json({
+                    "error": err,
+                    "status": "failure"
+                })
+            } else {
+                console.log("TWOFA INSERTION SUCCESS in code !");
+            }
+        });
+        twofaID = this.lastID;
+    } else if (type == "pin") {
+        db.run(INSERT_TWOFA, [type, null, null, null, answer,], err => {
+            if (err) {
+                console.log(err);
+                res.json({
+                    "error": err,
+                    "status": "failure"
+                })
+            } else {
+                console.log("TWOFA INSERTION SUCCESS pin !");
+            }
+        });
+        wofaID = this.lastID;
+    } else {
+        db.run(INSERT_TWOFA, [type, null, null, answer, null,], err => {
+            if (err) {
+                console.log(err);
+                res.json({
+                    "error": err,
+                    "status": "failure"
+                })
+            } else {
+                console.log("TWOFA INSERTION SUCCESS question !");
+            }
+        });
+        wofaID = this.lastID;
+    }
+
+    console.log("after insertion of 2faid is:", twofaID)
+
+    db.run(INSERT_USERS, [fullName, userName, email, hashedPass, twofaID], err => {
+        if (err) {
             console.log(err);
-        }else{
-            console.log("TWOFA INSERTION SUCCESS !");
-        }
-    });
-    db.run(INSERT_USERS,[fullName,userName,email,hashedPass,null],err=>{
-        if(err){
-            console.log(err);
-        }else{
+            res.json({
+                "error": err,
+                "status": "failure"
+            })
+        } else {
             console.log("USER INSERTION SUCCESS !")
         }
     })
+    console.log("all good,",this.lastID)
     res.redirect('/welcome');
 })
 
-//2fa pattern
-app.post('/2far/pattern',async (req,res)=>{
-    let type = 2;
-    let {token} = req.body;
-    // let {fullName,userName,email,password} = req.session.body;
-    // const hashedPass = await bcrypt.hash(password, 10);
-    // db.run(INSERT_TWOFA,[,,,pattern,],err=>{
-    //     if(err){
-    //         console.log(err);
-    //     }else{
-    //         console.log("TWOFA SUCCESS !");
-    //     }
-    // });
-    // db.run(INSERT_USERS,[fullName,userName,email,hashedPass],err=>{
-    //     if(err){
-    //         console.log(err);
-    //     }else{
-    //         console.log("USER INSERTION SUCCESS !");
-    //     }
-    // })
-    console.log(" we are here");
-    console.log(token);
-})
-//2fa pin
-app.post('/2far/pin',async (req,res)=>{
-    let type=3;
-    const {name} = req.body;
-    let {fullName,userName,email,password} = req.session.body;
-    const hashedPass = await bcrypt.hash(password, 10);
-    db.run(`INSERT INTO twofa(type,securityQuestion,securityCode,pattern,pin) VALUES(?,?,?,?,?)`,[,,,,pin],err=>{
-        if(err){
-            console.log(err);
-        }else{
-            console.log("TWOFA SUCCESS !");
-        }
-    });
-    db.run(INSERT_USERS,[fullName,userName,email,hashedPass],err=>{
-        if(err){
-            console.log(err);
-        }else{
-            console.log("USER INSERTION SUCCESS !");
-        }
-    })
-})
 /* ------------------ Handling Login -------------------- */
 //Handling login
 app.post("/login", login);
 
-//handling 2fa login
-app.get('/2faLogin',(req,res)=>{
-    let type = db.run()
-    if(type === 1){
-        
-    }
-    else if (type === 2){
-
-    }
-    else if(type === 3){
-
-    }
-    res.sendFile('public/loginTwoFactor.html',{root:__dirname});
-})
-
-//handling 2fa question
-app.post("/2fal/question",(req,res)=>{
-
-})
-//handling 2fa pattern
-app.post("/2fal/pattern",(req,res)=>{
-
-})
-//handling 2fa pin
-app.post("/2fal/pin",(req,res)=>{
-
-})
 
 /* ------------------------------------------------------- */
 //Listening on port
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on http://localhost:${port}`);
 });
 
-app.get('/welcome',(req,res)=>{
+app.get('/welcome', (req, res) => {
     res.send("Welcome");
 })
