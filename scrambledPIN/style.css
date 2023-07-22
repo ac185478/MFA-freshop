@@ -30,9 +30,10 @@
   
 .keyboard {
     /* position: fixed;
-    left: 0;
+    left: auto;
     bottom: 0; */
-    /* width: 100%; */
+    margin: auto;
+    width: 17%;
     padding: 5px 0;
     background: #d4480d;
     box-shadow: 0 0 50px rgba(50, 12, 221, 0.5);
@@ -50,7 +51,7 @@
 
 .keyboard__key {
     height: 45px;
-    width: 6%;
+    width: 50px;
     max-width: 90px;
     margin: 3px;
     border-radius: 4px;

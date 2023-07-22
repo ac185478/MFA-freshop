@@ -35,6 +35,7 @@ const Keyboard = {
         Keyboard.elements.main.appendChild(Keyboard.elements.keysContainer);        
         document.querySelector('body').appendChild(Keyboard.elements.main);
 
+        Keyboard._setupKeyboard("password");
         document.addEventListener('click',function(event){
 
             if(event.target.matches('input[type="password"]')){
@@ -182,7 +183,7 @@ const Keyboard = {
 
     open(initialValue, oninput, onclose) {
         this.properties.value = initialValue || "";
-        // this.eventHandlers.oninput = oninput;
+        this.eventHandlers.oninput = oninput;
         // this.eventHandlers.onclose = onclose;
         // this.elements.main.classList.remove("keyboard--hidden");
 
