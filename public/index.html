@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Footware</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script>
+        fetch()
+            .then(res =>{
+                if( res.status === 500 ){
+                    console.log(`error : ${res.json.error}`);
+                }
+                else if( res.status === 401 ){                       // This one to be decided.
+                    console.log(`Invalid Credentials`);
+                    alert("Invalid Credentials")
+                }
+            })
+    </script>
+</head>
+<body>
+    <div class="split-screen">
+        <div class="left-screen col-6">
+            <img src="./images/best.webp"  >
+        </div>
+        <div class="right-screen col-6" >
+            <form class="login-box" method="post" action="/login">
+                <h2>Login</h2>
+                <div class="user-box">
+                    <input type="text" name="username" required>
+                    <label>Username</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" name="password" required>
+                    <label>Password</label>
+                </div>
+                <button type="submit" class="btn btn-dark" >Submit</button><br>
+                <p>Don't have an account? <a href="register.html">Sign-Up</a></p>
+                
+            </form>
+            
+        </div> 
+    </div>
+</body>
+</html>
