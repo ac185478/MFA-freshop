@@ -103,7 +103,7 @@ app.post('/2fa-register', async (req, res) => {
     const hashedPass = await bcrypt.hash(password, 10);
 
     // type,securityQuestion,securityAnswer,pattern,pin
-    let twofaID;
+    let twofaID={};
     if (type === "code") {
         await db.run(`INSERT INTO twofa(type,securityQuestion,securityAnswer,pattern,pin) VALUES(?,?,?,?,?)`,[type, securityQuestion, answer, null, null], err => {
             if (err) {
@@ -115,9 +115,8 @@ app.post('/2fa-register', async (req, res) => {
             } else {
                 console.log("TWOFA INSERTION SUCCESS in code !");
             }
-            twofaID = db.exec(`SELECT MAX(id) FROM twofa`);
+            twofaID = db.exec(`SELECT MAX(ID) FROM twofa`);
         });
-        
     } else if (type == "pin") {
         await db.run(`INSERT INTO twofa(type,securityQuestion,securityAnswer,pattern,pin) VALUES(?,?,?,?,?)`, [type, null, null, null, answer,], err => {
             if (err) {
@@ -142,11 +141,10 @@ app.post('/2fa-register', async (req, res) => {
                 console.log("TWOFA INSERTION SUCCESS question !");
             }
         });
-        twofaID = this.lastID;
+        
     }
 
-    console.log("after insertion of 2faid is:", twofaID)
-
+    // await console.log("after insertion of 2faid is:", twofaID)
     await db.run(`INSERT INTO users (fullName,userName,email,password,twofaid) VALUES(?,?,?,?,?)`, [fullname, username, email, hashedPass, twofaID], err => {
         if (err) {
             console.log(err);
@@ -158,7 +156,8 @@ app.post('/2fa-register', async (req, res) => {
             console.log("USER INSERTION SUCCESS !")
         }
     })
-    console.log("all good,",this.lastID)
+    
+    // await console.log("all good,",this.lastID)
     res.redirect('/welcome');
 })
 
