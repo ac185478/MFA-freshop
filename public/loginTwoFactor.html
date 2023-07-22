@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Two Factor Authentication</title>
+    <link rel="stylesheet" href="./css/loginTwoFactor.css">
+    <!-- Enter password validation here -->
+    <!-- Write a script to change the style of the forms to "display:block" -->
+</head>
+<body>
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,800,700,900,300,100' rel='stylesheet' type='text/css'>
+
+    <div class="overlay">
+        <div class="wrap">
+            <h1>Two Factor Authentication</h1>
+            <ul class="custom-list">
+                <li>This is your selected type</li>
+                <li>Please enter to login</li>   <!-- Add class="change" if password incorrect and change the text-->
+            </ul>
+        </div>
+
+        <form class="QuestionList" style="display:none">
+            <h2>Security Questions</h2>
+            <p id="securityQuestion-question"><span class="questionMark">Q )</span> Who is your bestfriend ? </p>
+            <input type="text" placeholder="Enter your answer" name="answer" id="answer">
+            <input type="submit" value="Submit">
+        </form>
+
+        <form class="pattern" style="display:none">
+            <h2>Pattern</h2>
+            <div class="pattern-body">
+                <div class="lockBox box">
+                    <svg>
+                      <path d=""></path>
+                    </svg>
+                  </div>
+            </div>
+        </form>
+
+        <form class="scrambledPin" style="display:none">
+            <h2>Scrambled PIN</h2>   
+            <!-- Add Scrambled PIN here --> 
+        </form>
+    </div>
+    <script src="./loginPattern.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+.overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+   height:100%;
+}
+h1{
+    text-align:center;
+  color:#FFF !important;
+  margin-top:20%;
+  font:60px Lobster;
+  text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+             0px 8px 13px rgba(0,0,0,0.1),
+             0px 18px 23px rgba(0,0,0,0.1);
+}
+
+
+.wrap{
+    width:400px;
+    margin:0 auto;
+    margin-bottom: 35px;
+}
+
+li{
+    margin-left: 15px;
+}
+a{
+  font:17px Raleway;
+  color: #e74c3c;
+  font-weight:7000;
+  text-decoration:none;
+}
+
+a:hover{
+    font:20px Raleway;
+}
+
+
+ul.custom-list {
+    list-style: none;
+  }
+  ul.custom-list li:before {
+    content: "";
+    height: 0;
+    width: 0;
+    border-color: transparent #e74c3c;
+      border-style: solid;
+    border-width: 0.5em 0 0.5em 0.5em;
+    position: relative;
+    display: block;
+    left: -1em;
+    top: 1.25em;
+  }
+
+
+.change{
+    font-size: 18px;
+    color: red;
+    text-decoration: underline;
+}
+
+/* =================================================================================================== */
+*
+{
+    box-sizing: border-box; 
+    position: relative;
+}
+.pattern h2{
+    margin-left: 800px;
+    color: #e74c3c;
+    text-decoration: underline;
+}
+
+.pattern-body{
+    width: 100vw;
+    height: 100vh;   
+    margin-left: 800px;
+    /* background: #121212; */
+    --baseCol: #f6422e;
+    
+}
+
+.lockBox
+{
+    width: 300px;
+    height: 300px;
+    border: 1px solid #e74c3c;
+    display: flex;
+    align-items: space-between;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.dot
+{
+    width: 10px;
+    height: 10px;
+    border: 1px solid #e74c3c;
+    margin: 40px;
+    border-radius: 50%;
+    box-shadow: 0 0 30px #e74c3c;
+}
+
+.dot i
+{
+    pointer-events: none;
+    opacity: 0;
+}
+
+.dot.active
+{
+    transform: scale(0);
+    pointer-events: none;
+    border: none;
+    animation: pattern 0.25s cubic-bezier(0, 2.24,0.2,2.23)
+    forwards;
+}
+
+@keyframes pattern
+{
+    100%
+    {
+        background: var(--baseCol);
+        transform: scale(1);
+        box-shadow: 0 0 30px 5px var(--baseCol);
+    }
+}
+
+.dotArea
+{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    left: -16px;
+    top: -16px;
+    cursor: pointer;
+}
+
+.lockBox svg
+{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    z-index: -1;
+    fill: none;
+    stroke: var(--baseCol);
+}

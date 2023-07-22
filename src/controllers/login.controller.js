@@ -1,4 +1,6 @@
+const bcrypt = require('bcrypt');
 const {db}=require('./db.controller');
+
 const login = (req, res) => {
   const { username, password } = req.body;
   //Get the credentials
@@ -18,9 +20,10 @@ const login = (req, res) => {
         return res.status(401).json({ error: "invalid credentials" });
       }
 
-      res.status(201).json({ message: "User login successfully" });
+    //   res.status(201).json({ message: "User login successfully" });
     }
   );
+  res.redirect('/welcome');
 };
 
 exports.login = login;

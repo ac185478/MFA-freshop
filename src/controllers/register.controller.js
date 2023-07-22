@@ -11,9 +11,11 @@ const register = async (req, res) => {
       if (err) {
         return res.status(500).json({ error: "Failed to register user" });
       }
-      res.status(201).json({ message: "User registered successfully" });
+    //   res.status(201).json({ message: "User registered successfully" });
+      res.redirect('/twofaRegister');
     }
   );
+
 };
 
 
