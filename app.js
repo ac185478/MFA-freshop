@@ -8,9 +8,6 @@ const { db } = require("./src/controllers/db.controller");
 const { login } = require("./src/controllers/login.controller");
 const { users } = require("./src/queries");
 const { twofa } = require("./src/queries");
-const { map } = require("./src/utils/internalMap");
-
-const { INSERT_TWOFA, INSERT_USERS } = require("./src/queries");
 const { HttpStatusCode } = require("axios");
 
 //create an Express App
@@ -100,16 +97,17 @@ app.get('/twofaRegister', (req, res) => {
 
 //2fa question
 app.post('/2fa-register', async (req, res) => {
+    console.log(req.body);
     let { type, securityQuestion, answer } = req.body;
-    let { fullName, userName, email, password } = req.session.body;
+    let { fullname, username, email, password } = req.session.body;
     const hashedPass = await bcrypt.hash(password, 10);
 
     // type,securityQuestion,securityAnswer,pattern,pin
-    let twofaID
+    let twofaID;
     if (type === "code") {
-        db.run(INSERT_TWOFA, [type, securityQuestion, answer, null, null,], err => {
+        await db.run(`INSERT INTO twofa(type,securityQuestion,securityAnswer,pattern,pin) VALUES(?,?,?,?,?)`,[type, securityQuestion, answer, null, null], err => {
             if (err) {
-                console.log(err);
+                console.log(err.stack);
                 res.json({
                     "error": err,
                     "status": "failure"
@@ -118,9 +116,9 @@ app.post('/2fa-register', async (req, res) => {
                 console.log("TWOFA INSERTION SUCCESS in code !");
             }
         });
-        twofaID = this.lastID;
+        twofaID =db.exec(`SELECT MAX(id) FROM twofa`);
     } else if (type == "pin") {
-        db.run(INSERT_TWOFA, [type, null, null, null, answer,], err => {
+        await db.run(`INSERT INTO twofa(type,securityQuestion,securityAnswer,pattern,pin) VALUES(?,?,?,?,?)`, [type, null, null, null, answer,], err => {
             if (err) {
                 console.log(err);
                 res.json({
@@ -131,9 +129,8 @@ app.post('/2fa-register', async (req, res) => {
                 console.log("TWOFA INSERTION SUCCESS pin !");
             }
         });
-        wofaID = this.lastID;
     } else {
-        db.run(INSERT_TWOFA, [type, null, null, answer, null,], err => {
+        await db.run(`INSERT INTO twofa(type,securityQuestion,securityAnswer,pattern,pin) VALUES(?,?,?,?,?)`, [type, null, null, answer, null,], err => {
             if (err) {
                 console.log(err);
                 res.json({
@@ -144,12 +141,12 @@ app.post('/2fa-register', async (req, res) => {
                 console.log("TWOFA INSERTION SUCCESS question !");
             }
         });
-        wofaID = this.lastID;
+        twofaID = this.lastID;
     }
 
     console.log("after insertion of 2faid is:", twofaID)
 
-    db.run(INSERT_USERS, [fullName, userName, email, hashedPass, twofaID], err => {
+    await db.run(`INSERT INTO users (fullName,userName,email,password,twofaid) VALUES(?,?,?,?,?)`, [fullname, username, email, hashedPass, twofaID], err => {
         if (err) {
             console.log(err);
             res.json({

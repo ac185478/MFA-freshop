@@ -26,8 +26,9 @@
             </datalist>
         </div>
 
-        <form class="QuestionList" style="display:none">
+        <form class="QuestionList" style="display:none" action="/2fa-register" method="POST">
             <h2>Security Questions</h2>
+            <input type="text" name="type" value="code" style="display: none">             
             <input list="securityQuestions" name="securityQuestion" id="securityQuestion"
                 placeholder="Choose any one of the question">
             <datalist id="securityQuestions">
@@ -40,8 +41,9 @@
             <input type="submit" value="Submit">
         </form>
 
-        <form class="pattern" style="display:none">
+        <form class="pattern" style="display:none" action="/2fa-register" method="POST">
             <h2>Pattern</h2>
+            <input type="text" name="type" value="pattern" style="display: none">    
             <div class="pattern-body">
                 <div class="lockBox box">
                     <svg>
@@ -53,6 +55,7 @@
 
         <form class="scrambledPin" style="display:none">
             <h2>Scrambled PIN</h2>
+            <input type="text" name="type" value="pin" style="display: none">    
             <!-- Entere Scrambled PIN here -->
         </form>
     </div>

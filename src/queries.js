@@ -11,7 +11,7 @@ let users = `CREATE TABLE IF NOT EXISTS "users" (
 
 let twofa = `CREATE TABLE IF NOT EXISTS "twofa" (
         "id" integer,
-        "type" INT DEFAULT NULL,
+        "type" varchar DEFAULT NULL,
         "securityQuestion" varchar DEFAULT NULL,
         "securityAnswer" varchar DEFAULT NULL,
         "pattern" varchar DEFAULT NULL,
