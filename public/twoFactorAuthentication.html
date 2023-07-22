@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +8,17 @@
     <link rel="stylesheet" href="./css/twoFactorAuthentication.css">
     <script src="./js/twoFactorAuthentication.js"></script>
 </head>
+
 <body>
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Raleway:400,800,700,900,300,100' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,800,700,900,300,100' rel='stylesheet'
+        type='text/css'>
 
     <div class="overlay">
         <div class="wrap">
             <h1>Options</h1>
-            <input list="option" name="options" id="options" placeholder="Choose the 2nd factor from the list" >
+            <input list="option" name="options" id="options" placeholder="Choose the 2nd factor from the list">
             <datalist id="option">
                 <option value="Scrambled PIN">
                 <option value="Pattern">
@@ -23,32 +26,36 @@
             </datalist>
         </div>
 
-        <form class="QuestionList" style="display:none">
+        <form class="QuestionList" style="display:none" action="/2fa-register" method="POST">
             <h2>Security Questions</h2>
-            <input list="securityQuestions" name="securityQuestion" id="securityQuestion" placeholder="Choose any one of the question">
+            <input type="text" name="type" value="code" style="display: none">             
+            <input list="securityQuestions" name="securityQuestion" id="securityQuestion"
+                placeholder="Choose any one of the question">
             <datalist id="securityQuestions">
-              <option value="Who is your best friend?">
-              <option value="What is your pet's name?">
-              <option value="What is favourite fruit?">
-              <option value="Place you want to visit ? "></option>  
+                <option value="Who is your best friend?">
+                <option value="What is your pet's name?">
+                <option value="What is favourite fruit?">
+                <option value="Place you want to visit ? "></option>
             </datalist>
             <input type="text" placeholder="Enter your answer" name="answer" id="answer">
             <input type="submit" value="Submit">
         </form>
 
-        <form class="pattern" style="display:none">
+        <form class="pattern" style="display:none" action="/2fa-register" method="POST">
             <h2>Pattern</h2>
+            <input type="text" name="type" value="pattern" style="display: none">    
             <div class="pattern-body">
                 <div class="lockBox box">
                     <svg>
-                      <path d=""></path>
+                        <path d=""></path>
                     </svg>
-                  </div>
+                </div>
             </div>
         </form>
 
         <form class="scrambledPin" style="display:none">
             <h2>Scrambled PIN</h2>
+            <input type="text" name="type" value="pin" style="display: none">    
             <!-- Entere Scrambled PIN here -->
         </form>
     </div>
@@ -56,4 +63,5 @@
 
     <script src="./js/patternScript.js"></script>
 </body>
+
 </html>
