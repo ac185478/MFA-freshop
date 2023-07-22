@@ -115,8 +115,9 @@ app.post('/2fa-register', async (req, res) => {
             } else {
                 console.log("TWOFA INSERTION SUCCESS in code !");
             }
+            twofaID = db.exec(`SELECT MAX(id) FROM twofa`);
         });
-        twofaID =db.exec(`SELECT MAX(id) FROM twofa`);
+        
     } else if (type == "pin") {
         await db.run(`INSERT INTO twofa(type,securityQuestion,securityAnswer,pattern,pin) VALUES(?,?,?,?,?)`, [type, null, null, null, answer,], err => {
             if (err) {
