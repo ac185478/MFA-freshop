@@ -17,13 +17,12 @@ const login = (req, res) => {
       //validation of credentials
       const passMatch = await bcrypt.compare(password, usr.password);
       if (!passMatch) {
-        return res.status(401).json({ error: "invalid credentials" });
+        return res.status(401);
       }
-
-    //   res.status(201).json({ message: "User login successfully" });
     }
   );
-  res.redirect('/welcome');
+  req.session.username = username;
+  res.redirect('/2faLogin');
 };
 
 exports.login = login;

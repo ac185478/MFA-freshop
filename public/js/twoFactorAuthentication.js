@@ -3,7 +3,8 @@ window.onload = () => {
     option.addEventListener('input', ()=>{
         console.log(`Selected option :${option.value}`);
         
-        let QuestionList = document.querySelector(".QuestionList");
+        if(option.value!=null){
+            let QuestionList = document.querySelector(".QuestionList");
         let pattern = document.querySelector(".pattern");
         let scrambledPin = document.querySelector(".scrambledPin");
 
@@ -21,6 +22,7 @@ window.onload = () => {
             QuestionList.style.display = "none";
             pattern.style.display = "none"
             scrambledPin.style.display = "block";
+        }
         }
     })
 }
