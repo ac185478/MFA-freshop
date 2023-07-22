@@ -3,7 +3,7 @@ function op(elem){return document.querySelector(elem)}
 function opp(elem){return document.querySelectorAll(elem)}
 
 var lockBox=op('.lockBox');
-for(var a=0; a< 9; a++){
+for(var a=9; a>=1; a--){
     lockBox.insertAdjacentHTML("afterbegin",`<div class="dot"><div class="dotArea" onmousedown="down(this)"><i>${a}</i></div></div>`)
 }
 
@@ -17,6 +17,7 @@ inputData="",
 correctData="2413";
 
 function end(){
+    giveOut(inputData);
     document.body.style.setProperty('--baseCol',(inputData==correctData)?"#0f0":"#f00");
 
     startDot=undefined;
@@ -82,4 +83,8 @@ function removeEvToMouseEnter(){
 }
 function updateLine(){
     svgPath.setAttribute("d",lineData+tempLineData);
+}
+
+function giveOut(inputData){
+    console.log(`input:${inputData}`);
 }

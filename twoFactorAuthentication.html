@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./twoFactorAuthentication.css">
 
     <script>
+        // Enter Password fetch from registration and post it back script here
         window.onload = () => {
             let option = document.querySelector('#options');
             option.addEventListener('input', ()=>{
@@ -16,13 +17,13 @@
                 let pattern = document.querySelector(".pattern");
                 let scrambledPin = document.querySelector(".scrambledPin");
 
-                if( option.value == "Security Question"){
+                if( option.value == "Security Questions"){
                     QuestionList.style.display = "block";
                     pattern.style.display = "none"
                     scrambledPin.style.display = "none";
                 }
                 else if( option.value == "Pattern"){
-                    QuestionList.style.display = "nonq";
+                    QuestionList.style.display = "none";
                     pattern.style.display = "block"
                     scrambledPin.style.display = "none";
                 }
@@ -47,7 +48,7 @@
             <datalist id="option">
                 <option value="Scrambled PIN">
                 <option value="Pattern">
-                <option value="Security Question"></option>
+                <option value="Security Questions"></option>
             </datalist>
         </div>
 
@@ -77,7 +78,7 @@
 
         <form class="scrambledPin" style="display:none">
             <h2>Scrambled PIN</h2>
-            
+            <!-- Entere Scrambled PIN here -->
         </form>
     </div>
 
